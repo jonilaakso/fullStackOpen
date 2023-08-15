@@ -1,31 +1,33 @@
 import { useState } from 'react'
 
 
-//TODO: 
-
-//Seuraavaksi 1.11 unicafe step6
-//KORJAA AVERAGE JA POSITIVE. Laskun pitäisi tapahtua lisäysten jälkeen, ei samanaikaisesti.
-
-
 //Statistiikat
 const Statistics = (props) => {
 
-  return(
-    <>
-      <h1>Statistics</h1>
-      <table>
-        <tbody>
-          <StatisticLine text="Good:" value={ props.good } />
-          <StatisticLine text="Neutral:" value={ props.neutral } />
-          <StatisticLine text="Bad:" value={ props.bad } />
-          <StatisticLine text="All:" value={ props.all } />
-          <StatisticLine text="Average:" value={ props.average } />
-          <StatisticLine text="Positive:" value={ props.positive } />
-        </tbody>
-      </table>
+  if (props.all > 0){
+    return(
+      <>
+        <h1>Statistics</h1>
+        <table>
+          <tbody>
+            <StatisticLine text="Good:" value={ props.good } />
+            <StatisticLine text="Neutral:" value={ props.neutral } />
+            <StatisticLine text="Bad:" value={ props.bad } />
+            <StatisticLine text="All:" value={ props.all } />
+            <StatisticLine text="Average:" value={ props.average } />
+            <StatisticLine text="Positive:" value={ props.positive } />
+          </tbody>
+        </table>
+  
+      </>
+    );
+  }
+  else{
+    return(
+      <p>No feedback given</p>
+    )
+  }
 
-    </>
-  );
 }
 
 const StatisticLine = (props) => {
@@ -74,8 +76,8 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const [all, setAll] = useState(0)
-  const [average, setAverage] = useState(0)
   const [positive, setPositive] = useState(0)
+
  
 
   const updateStats = (name) => {
@@ -101,10 +103,8 @@ const App = () => {
     //set all
     const updatedAll = all + 1;
     setAll(updatedAll);
-    setAverage((good - bad) / updatedAll);
     setPositive((good / updatedAll * 100));
   }
-  
 
 
   return (
@@ -130,7 +130,7 @@ const App = () => {
       neutral = { neutral }
       bad = { bad }
       all = { all }
-      average = { average }
+      average = { (good - bad) / all }
       positive = { positive }
       />
     </div>
