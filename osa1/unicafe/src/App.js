@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-//Statistiikat
+//Statistics
 const Statistics = (props) => {
 
   if (props.all > 0){
