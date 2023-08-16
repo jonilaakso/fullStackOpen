@@ -77,51 +77,56 @@ const App = () => {
   const [bad, setBad] = useState(0)
   const [all, setAll] = useState(0)
   const [positive, setPositive] = useState(0)
+  const [average, setAverage] = useState(0)
 
- 
-
-  const updateStats = (name) => {
-
-    switch (name){
-
-      case "Good":
-        const updatedGood = good + 1;
-        setGood(updatedGood);
-        break;
-      case "Neutral":
-        const updatedNeutral = neutral + 1;
-        setNeutral(updatedNeutral);
-        break;
-      case "Bad":
-        const updatedBad = bad + 1;
-        setBad(updatedBad);
-        break;
-      default: 
-        break;
-    }
-
-    //set all
+  const updateGood = () => {
+    const updatedGood = good + 1;
     const updatedAll = all + 1;
+    const updatedAverage = (updatedGood - bad) / updatedAll;
+
     setAll(updatedAll);
+    setGood(updatedGood);
+    setAverage(updatedAverage)
     setPositive((good / updatedAll * 100));
   }
 
+  const updateNeutral = () => {
+    const updatedNeutral = neutral + 1;
+    const updatedAll = all + 1;
+    const updatedAverage = (good - bad) / updatedAll;
+
+    setAll(updatedAll);
+    setNeutral(updatedNeutral);
+    setAverage(updatedAverage)
+    setPositive((good / updatedAll * 100));
+  }
+
+  const updateBad = () => {
+    const updatedBad = bad + 1;
+    const updatedAll = all + 1;
+    const updatedAverage = (good - updatedBad) / updatedAll;
+
+    setAll(updatedAll);
+    setBad(updatedBad);
+    setAverage(updatedAverage)
+    setPositive((good / updatedAll * 100));
+  }
 
   return (
     <div>
       <h1>Give Feedback</h1>
    
       <Button handleClick={() => {
-        updateStats("Good");
+        updateGood();
         }} 
         text="Good" /> 
 
       <Button handleClick={() => {
-        updateStats("Neutral");
+        updateNeutral();
       }} text="Neutral" /> 
 
       <Button handleClick={() => {
-        updateStats("Bad");
+        updateBad();
       }} text="Bad" /> 
 
 
@@ -130,7 +135,7 @@ const App = () => {
       neutral = { neutral }
       bad = { bad }
       all = { all }
-      average = { (good - bad) / all }
+      average = { average }
       positive = { positive }
       />
     </div>
